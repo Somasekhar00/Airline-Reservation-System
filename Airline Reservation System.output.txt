@@ -27,4 +27,5 @@ Booking ID: 1, User ID: 101, Flight ID: 1
 2. Book Flight
 3. View Bookings
 4. Exit
-Choose an option: 
+Choose an option: 4
+Exiting...
