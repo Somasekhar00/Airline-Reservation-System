@@ -1,0 +1,124 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Flight {
+    int flightId;
+    String source, destination;
+    int seats;
+
+    Flight(int flightId, String source, String destination, int seats) {
+        this.flightId = flightId;
+        this.source = source;
+        this.destination = destination;
+        this.seats = seats;
+    }
+
+    @Override
+    public String toString() {
+        return "Flight ID: " + flightId + ", Source: " + source + ", Destination: " + destination + ", Seats: " + seats;
+    }
+}
+
+class Booking {
+    int bookingId, userId, flightId;
+
+    Booking(int bookingId, int userId, int flightId) {
+        this.bookingId = bookingId;
+        this.userId = userId;
+        this.flightId = flightId;
+    }
+
+    @Override
+    public String toString() {
+        return "Booking ID: " + bookingId + ", User ID: " + userId + ", Flight ID: " + flightId;
+    }
+}
+
+public class AirlineSystem {
+    private List<Flight> flights = new ArrayList<>();
+    private List<Booking> bookings = new ArrayList<>();
+    private int bookingIdCounter = 1;
+
+    void addFlight(Flight flight) {
+        flights.add(flight);
+    }
+
+    void searchFlights(String source, String destination) {
+        for (Flight flight : flights) {
+            if (flight.source.equalsIgnoreCase(source) && flight.destination.equalsIgnoreCase(destination)) {
+                System.out.println(flight);
+            }
+        }
+    }
+
+    void bookFlight(int userId, int flightId) {
+        for (Flight flight : flights) {
+            if (flight.flightId == flightId && flight.seats > 0) {
+                bookings.add(new Booking(bookingIdCounter++, userId, flightId));
+                flight.seats--;
+                System.out.println("Booking successful! Booking ID: " + (bookingIdCounter - 1));
+                return;
+            }
+        }
+        System.out.println("Booking failed. No seats available or invalid flight ID.");
+    }
+
+    void viewBookings() {
+        for (Booking booking : bookings) {
+            System.out.println(booking);
+        }
+    }
+
+    public static void main(String[] args) {
+        AirlineSystem system = new AirlineSystem();
+        Scanner scanner = new Scanner(System.in);
+
+        // Add sample flights
+        system.addFlight(new Flight(1, "New York", "London", 100));
+        system.addFlight(new Flight(2, "London", "Paris", 50));
+
+        // Menu
+        while (true) {
+            System.out.println("\n1. Search Flights\n2. Book Flight\n3. View Bookings\n4. Exit");
+            System.out.print("Choose an option: ");
+
+            try {
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline character
+
+                switch (choice) {
+                    case 1:
+                        System.out.print("Enter source: ");
+                        String source = scanner.nextLine();
+                        System.out.print("Enter destination: ");
+                        String destination = scanner.nextLine();
+                        system.searchFlights(source, destination);
+                        break;
+
+                    case 2:
+                        System.out.print("Enter User ID: ");
+                        int userId = scanner.nextInt();
+                        System.out.print("Enter Flight ID: ");
+                        int flightId = scanner.nextInt();
+                        system.bookFlight(userId, flightId);
+                        break;
+
+                    case 3:
+                        system.viewBookings();
+                        break;
+
+                    case 4:
+                        System.out.println("Exiting...");
+                        return;
+
+                    default:
+                        System.out.println("Invalid choice. Try again.");
+                }
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.nextLine(); // Clear the invalid input
+            }
+        }
+    }
+}
