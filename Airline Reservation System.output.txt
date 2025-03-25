@@ -1,0 +1,30 @@
+
+1. Search Flights
+2. Book Flight
+3. View Bookings
+4. Exit
+Choose an option: 1
+Enter source: new york
+Enter destination: London
+
+1. Search Flights
+2. Book Flight
+3. View Bookings
+4. Exit
+Choose an option: 2
+Enter User ID: 101
+Enter Flight ID: 1
+Booking successful! Booking ID: 1
+
+1. Search Flights
+2. Book Flight
+3. View Bookings
+4. Exit
+Choose an option: 3
+Booking ID: 1, User ID: 101, Flight ID: 1
+
+1. Search Flights
+2. Book Flight
+3. View Bookings
+4. Exit
+Choose an option: 
